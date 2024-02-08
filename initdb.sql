@@ -1,0 +1,37 @@
+CREATE DATABASE IF NOT EXISTS msgapp;
+
+USE msgapp;
+
+CREATE TABLE IF NOT EXISTS users 
+(
+ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ login  VARCHAR(20) NOT NULL,
+ password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS messages
+(
+ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ user_id INT NOT NULL, 
+ date DATETIME NOT NULL,
+ title VARCHAR(100) NOT NULL,
+ brief VARCHAR(255) NOT NULL,
+ text VARCHAR(4000) NOT NULL,
+ CONSTRAINT messages_user_id_fk FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS comments
+(
+ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ msg_id INT NOT NULL,
+ user_id INT NOT NULL,
+ date DATETIME NOT NULL,
+ text VARCHAR(1000) NOT NULL,
+ CONSTRAINT comments_msg_id_fk FOREIGN KEY (msg_id) REFERENCES messages(id),
+ CONSTRAINT comments_user_id_fk FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+INSERT INTO users VALUES (NULL, 'denis', '$2y$10$6Pru7wDcyy2Ivf9NjRbhQO/IgFZx7UEcxhkg9Uup7P5yVBJYAd4su');
+INSERT INTO users VALUES (NULL, 'alex',  '$2y$10$6Pru7wDcyy2Ivf9NjRbhQO/IgFZx7UEcxhkg9Uup7P5yVBJYAd4su');
+INSERT INTO users VALUES (NULL, 'nick',  '$2y$10$6Pru7wDcyy2Ivf9NjRbhQO/IgFZx7UEcxhkg9Uup7P5yVBJYAd4su');
+INSERT INTO users VALUES (NULL, 'mary',  '$2y$10$6Pru7wDcyy2Ivf9NjRbhQO/IgFZx7UEcxhkg9Uup7P5yVBJYAd4su');
